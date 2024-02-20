@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Generate QR code</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<center>
+	<p style="font-family: Courier New; font-size: 50px">Your qr code:</p>
+	
+	<img th:src="..+${path}" width=400, height=400/>
+	
+</center>
+</body>
+<center>
+<p><input type="button" VALUE="Back" onClick="location.href = 'http://localhost:8080/generateQRCode';" style="font-size: 30px" ></p>
+<p style="font-family: Courier New; font-size: 20px"> <a href="http://localhost:8080/">home</a></p>
+</center>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+
+#display_image {
+	width: 400px;
+	height: 400px;
+	background-position: center;
+	background-size: cover;
+}
+</style>
+<title>Read QR code</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<center>
+       <p style="font-family: Courier New; font-size: 50px">Read qr code</p>
+       
+       		<p><input type="file" id="image_input" name="files" style="font-family: Courier New; font-size: 20px"/></p>
+           	<p><img id="display_image" /></p>
+           	
+        <form id="theForm"> 
+			<input type='submit' VALUE="Read QR Code" style="font-size: 30px"/>
+			<input type="button" VALUE="Back" onClick="location.href = 'http://localhost:8080/';" style="font-size: 30px" >
+		</form>
+</center>
+</body>
+
+<script>
+
+const input = document.getElementById("image_input");
+const image = document.getElementById("display_image");
+
+const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+
+        fileReader.onerror = (error) => {
+            reject(error);
+        };
+    });
+};
+
+const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await convertBase64(file);
+    image.src = base64;
+};
+
+input.addEventListener("change", (e) => {
+    uploadImage(e);
+});
+
+var theForm = document.getElementById('theForm');
+
+theForm.onsubmit = function(e){
+
+	location = "http://localhost:8080/readResult?img=" + encodeURIComponent(image.src);
+
+return false;
+
+
+}
+
+</script>
+</html>
