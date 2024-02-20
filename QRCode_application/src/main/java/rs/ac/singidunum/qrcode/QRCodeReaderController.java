@@ -28,8 +28,8 @@ public class QRCodeReaderController {
 		Base64.Decoder decoder = Base64.getDecoder();
 		byte[] imgBytes = decoder.decode(base64Image);		
 		BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBytes));
-		ImageIO.write(image, "PNG", new File("C:\\Users\\djordje\\Desktop\\QRCode_application\\test.png"));
-		String readImage = QRCodeReader.readQRCode("C:\\Users\\djordje\\Desktop\\QRCode_application\\test.png");		
+		ImageIO.write(image, "PNG", new File("C:\\Users\\djordje\\git\\repository\\QRCode_application\\test.png"));
+		String readImage = QRCodeReader.readQRCode("C:\\Users\\djordje\\git\\repository\\QRCode_application\\test.png");		
 		model.addAttribute("decodedString", readImage);
 		
 		return "readResult";

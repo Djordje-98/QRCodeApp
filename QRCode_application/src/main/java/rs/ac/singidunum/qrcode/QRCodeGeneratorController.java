@@ -12,7 +12,7 @@ import com.google.zxing.WriterException;
 @Controller
 public class QRCodeGeneratorController {
 	
-	private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\djordje\\Desktop\\QRCode_application\\target\\classes\\static\\images\\slika.png";
+	private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\djordje\\git\\repository\\QRCode_application\\target\\classes\\static\\images\\slika.png";
 	private static final String QR_CODE_RELATIVE_IMAGE_PATH = "/images/slika.png";
 	
 	
