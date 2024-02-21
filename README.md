@@ -1,7 +1,7 @@
 Klijent - server aplikacija </br>
-Java
-Eclipse
-Spring framework
+Java </br>
+Eclipse </br>
+Spring framework </br>
 QR kod aplikacija
 - generisanje qr kodova
 - citanje qr kodova
