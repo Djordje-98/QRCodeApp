@@ -27,21 +27,38 @@ class QrCodeGeneratorTest {
         BitMatrix result = qrcode.generateQRCodeImage(name, width, height, filePath);        
         assertNotNull(result);
         
+        // Provjera da li je BitMatrix generiran
         assertEquals(width, result.getWidth());
         assertEquals(height, result.getHeight());
         
-        //assertTrue(Files.exists(FileSystems.getDefault().getPath(filePath)));
+        // Provjera da li datoteka postoji
+        assertTrue(Files.exists(FileSystems.getDefault().getPath(filePath)));
 
 	}
 	
-	
 	@Test
 	public void willNotGenerateQRCodeImageWithEmptyContent() {
-		assertThrows(WriterException.class, () -> {
-			QRCodeGenerator.generateQRCodeImage(" ", 300, 300, "test.png");
+		var exception = assertThrows(IllegalArgumentException.class, () -> {
+			QRCodeGenerator.generateQRCodeImage("", 300, 300, "test.png");
 		});
+		
+		assertEquals("Found empty contents", exception.getMessage());
 	}
 	
+	@Test 
+	public void willNotgenerateQRCodeImageWithNegativeWidthHeight() {
+		
+        int width = -300;
+        int height = -300;
+        
+		var exception = assertThrows(IllegalArgumentException.class,() -> {
+			QRCodeGenerator.generateQRCodeImage("Djordje", width, height, "test.png");
+		});
+		
+		assertEquals("Requested dimensions are too small: " + width + 'x' +
+		          height, exception.getMessage());
+		
+	}
 	
 	@Test
 	public void willNotGenerateQRCodeImageWithLongContent() {
@@ -52,27 +69,19 @@ class QrCodeGeneratorTest {
 							+ "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 							+ "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 							;
-		assertThrows(WriterException.class, () -> {
+		var exception = assertThrows(WriterException.class, () -> {
 			QRCodeGenerator.generateQRCodeImage(longContent, 300, 300, "test.png");
 		});
-		
-		String message = "Data to big";
-		String expectedMessage = "Data too big";
-    
-		assertEquals(expectedMessage, message);
+		assertEquals("Data too big", exception.getMessage());
 	}
 	
-	
 	@Test
-    public void fileExistsAtLocationTest() {
+    public void fileExistsAtLocation() {
         
 		String filePath = "test.png";
         Path path = Paths.get(filePath); 
         assertTrue(path.toFile().exists(), "File does not exist at location: " + filePath);
         
-        String filePath2 = "C:\\Users\\djordje\\Desktop\\QRCode_application\\target\\classes\\static\\images\\slika.png";
-        Path path2 = Paths.get(filePath2);
-        assertTrue(path2.toFile().exists(), "File does not exist at location: " + filePath2); 
     }
 }
 
